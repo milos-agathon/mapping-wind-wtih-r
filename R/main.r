@@ -6,9 +6,13 @@
 # 1. INSTALL & LOAD LIBRARIES
 #----------------------------
 
+# Please install the latest version
+remotes::install_github("bluegreen-labs/ecmwfr")
+
 libs <- c(
     "ecmwfr", "tidyverse", "metR",
-    "terra", "sf", "giscoR", "classInt"
+    "terra", "sf", "giscoR", "classInt",
+    "lubridate", "hms"
 )
 
 installed_libs <- libs %in% rownames(
@@ -26,13 +30,13 @@ invisible(lapply(libs, library, character.only = T))
 # 1. QUERY WIND DATA
 #--------------------
 
-my_api <- "*****" # PLEASE INSERT YOUR UID
+# my_api <- "*****" # NOT NEEDED
 my_key <- "************" # PLEASE INSERT YOUR API KEY
 
-install.packages("lubridate")
-install.packages("hms")
-library(lubridate)
-library(hms)
+ecmwfr::wf_set_key(
+    # user = my_api,
+    key = my_key
+)
 
 time <- seq(
     from = lubridate::ymd_hms(
@@ -75,15 +79,10 @@ request <- list(
     target = "europe-wind.nc"
 )
 
-ecmwfr::wf_set_key(
-    user = my_api,
-    key = my_key,
-    service = "cds"
-)
-
 ecmwfr::wf_request(
     request = request,
-    user = my_api,
+    transfer = TRUE,
+    #user = my_api, NOT NEEDED
     path = getwd()
 )
 
