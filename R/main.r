@@ -30,7 +30,7 @@ invisible(lapply(libs, library, character.only = T))
 # 1. QUERY WIND DATA
 #--------------------
 
-# my_api <- "*****" # NOT NEEDED
+my_api <- "*****" # PLEASE INSERT YOUR EMAIL
 my_key <- "************" # PLEASE INSERT YOUR API KEY
 
 ecmwfr::wf_set_key(
